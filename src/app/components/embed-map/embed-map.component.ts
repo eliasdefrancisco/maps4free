@@ -12,7 +12,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
 })
 export class EmbedMapComponent implements OnInit {
   @Input() hideControls: boolean = true
-  @Input() updatePositionSeconds: number = 0
+  @Input() showLocator: boolean = true
+  @Input() updatePositionSeconds: number = 30
   gMapSrcSanitized: SafeResourceUrl
 
   private set gMapSrc(url: string) {
@@ -36,7 +37,7 @@ export class EmbedMapComponent implements OnInit {
         lat -= 0.002
         lng += 0.002
         this.setUrlUbi(lat, lng)
-      }, this.updatePositionSeconds)
+      }, this.updatePositionSeconds * 1000)
     }
   }
     
