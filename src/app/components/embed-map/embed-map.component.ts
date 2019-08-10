@@ -1,6 +1,7 @@
 import { 
   Component,
-  OnInit
+  OnInit,
+  Input
 } from '@angular/core'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
 
@@ -10,23 +11,33 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
   styleUrls: ['./embed-map.component.scss'],
 })
 export class EmbedMapComponent implements OnInit {
+  @Input() hideControls: boolean = true
+  @Input() updatePositionSeconds: number = 0
   gMapSrcSanitized: SafeResourceUrl
 
   private set gMapSrc(url: string) {
     this.gMapSrcSanitized = this.sanitizer.bypassSecurityTrustResourceUrl(url)
   }
 
-  constructor(private sanitizer: DomSanitizer) { }
+  constructor(
+    private sanitizer: DomSanitizer
+  ) { }
   
   ngOnInit() {
+    this.setMap()
+  }
+  
+  private setMap() {
     let lat = -6.09969875
     let lng = 36.6798263
     this.setUrlUbi(lat, lng)
-    setInterval(() => {
-      lat -= 0.002
-      lng += 0.002
-      this.setUrlUbi(lat, lng)
-    },20000)
+    if(this.updatePositionSeconds > 0) {
+      setInterval(() => {
+        lat -= 0.002
+        lng += 0.002
+        this.setUrlUbi(lat, lng)
+      }, this.updatePositionSeconds)
+    }
   }
     
   private setUrlUbi(lat: number, lng: number) {
