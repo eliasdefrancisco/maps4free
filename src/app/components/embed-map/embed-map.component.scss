@@ -17,8 +17,34 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        z-index: 20;
         img {
             width: 10rem;
         }
+    }
+    .z-hide {
+        z-index: -10;
+        opacity: .01;
+    }
+    .z-show {
+        z-index: 10;
+    }
+    .vis-show {
+        opacity: 1;
+    }
+    .hide-locator {
+        opacity: .01;
+    }
+    .vis-locator {
+        opacity: 1;
+    }
+    iframe {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
 }
